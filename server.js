@@ -1,6 +1,7 @@
-//Exportations
+//Impotations
 const { db } = require('./utils/database');
 const { app } = require('./app');
+const { modelsRelations } = require('./models/relations');
 
 //Dotenv configuration
 const dotenv = require('dotenv');
@@ -10,6 +11,9 @@ dotenv.config({ path: './config.env' });
 db.authenticate()
   .then(console.log('Databas already'))
   .catch(err => console.log(err));
+
+//Entablish models relations
+modelsRelations();
 
 //Sync database
 db.sync()
