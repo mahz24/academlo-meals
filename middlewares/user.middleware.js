@@ -54,7 +54,7 @@ const tokenVerification = catchAsync(async (req, res, next) => {
 
   if (!user) {
     return next(
-      new AppError('The owner pf this token is not longer avaliable', 403)
+      new AppError('The owner of this token is not longer avaliable', 403)
     );
   }
 
@@ -63,4 +63,15 @@ const tokenVerification = catchAsync(async (req, res, next) => {
   next();
 });
 
-module.exports = { userExist, tokenVerification };
+const protectUser = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const { sessionUser } = req;
+
+  if (Number(id) !== sessionUser.id) {
+    return next(new AppError('This action is not availible', 403));
+  }
+
+  next();
+});
+
+module.exports = { userExist, tokenVerification, protectUser };

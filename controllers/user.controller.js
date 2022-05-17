@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 //Models
 const { User } = require('../models/user.model');
 const { Order } = require('../models/order.model');
+const { Meal } = require('../models/meal.model');
+const { Restaurant } = require('../models/retaurant.model');
 
 //Utils
 const { catchAsync } = require('../utils/catchAsync');
@@ -64,24 +66,33 @@ const deleteUser = catchAsync(async (req, res, next) => {
 });
 
 const getAllOrders = catchAsync(async (req, res, next) => {
-  const { user } = req;
+  const { sessionUser } = req;
 
   const orders = await Order.findAll({
-    where: { id: user.id, status: 'active' },
+    where: { userId: sessionUser.id, status: 'active' },
+    include: [{ model: Meal, include: [{ model: Restaurant }] }],
   });
 
-  res.status(200).json({ status: 'success' });
+  res.status(200).json({ status: 'success', orders });
 });
 
 const getOrderById = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const { user } = req;
+  const { sessionUser } = req;
 
-  const orders = await Order.findAll({
-    where: { id: user.id, status: 'active' },
+  const order = await Order.findOne({
+    where: {
+      id,
+      userId: sessionUser.id,
+      status: 'active',
+      include: [{ model: Meal, include: [{ model: Restaurant }] }],
+    },
   });
+  console.log(order);
 
-  const order = await orders.findOne({ where: { id, status: 'active' } });
+  if (!order) {
+    return next(new AppError('Order does not exist with given id', 404));
+  }
 
   res.status(200).json({ order });
 });

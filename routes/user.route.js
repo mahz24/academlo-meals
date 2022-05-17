@@ -15,6 +15,7 @@ const {
 const {
   userExist,
   tokenVerification,
+  protectUser,
 } = require('../middlewares/user.middleware');
 
 //Import middlewares validatios for create user
@@ -30,7 +31,10 @@ const router = express.Router();
 router.post('/signup', createUserValidations, checkValidatios, createUser);
 router.post('/login', loginUser);
 router.use(tokenVerification);
-router.route('/:id').patch(userExist, updateUser).delete(userExist, deleteUser);
+router
+  .route('/:id')
+  .patch(userExist, protectUser, updateUser)
+  .delete(userExist, protectUser, deleteUser);
 router.get('/orders', getAllOrders);
 router.get('/orders/:id', getOrderById);
 
