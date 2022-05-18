@@ -1,5 +1,11 @@
 //Extentions
 const express = require('express');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+const dotenv = require('dotenv');
+
+dotenv.config({ path: './config.env' });
 
 //Export errors precessor
 const { globalErrorHandler } = require('./controllers/errors.controller');
@@ -15,6 +21,14 @@ const app = express();
 
 //Enable incoming Json data
 app.use(express.json());
+
+//Libraries for production
+app.use(helmet());
+app.use(compression());
+
+//Log incoming requests
+if (process.env.NODE_ENV === 'develoment') app.use(morgan('dev'));
+else app.use(morgan('combined'));
 
 //Routers of app
 app.use('/api/v1/users', userRouter);
