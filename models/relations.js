@@ -24,7 +24,7 @@ const modelsRelations = () => {
   Review.belongsTo(User);
 
   //restaurant to reviews and reviews to restaurant
-  Restaurant.hasMany(Review, { foreignKey: 'restaurandId' });
+  Restaurant.hasMany(Review, { foreignKey: 'restaurantId' });
   Review.belongsTo(Restaurant);
 };
 

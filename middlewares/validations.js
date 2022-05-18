@@ -18,6 +18,12 @@ const createUserValidations = [
     .withMessage('Passwor must be at least 8 characters long'),
 ];
 
+const createReviewValidations = [
+  body('name').notEmpty().withMessage('Name cannot be empty'),
+  body('rating').notEmpty().withMessage('Rating connot be empty'),
+  body('address').notEmpty().withMessage('Address cannot be empty'),
+];
+
 const checkValidatios = (req, res, next) => {
   const errors = validationResult(req);
 
@@ -32,4 +38,8 @@ const checkValidatios = (req, res, next) => {
   next();
 };
 
-module.exports = { checkValidatios, createUserValidations };
+module.exports = {
+  checkValidatios,
+  createUserValidations,
+  createReviewValidations,
+};

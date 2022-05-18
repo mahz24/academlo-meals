@@ -74,4 +74,8 @@ const protectUser = catchAsync(async (req, res, next) => {
   next();
 });
 
-module.exports = { userExist, tokenVerification, protectUser };
+module.exports = {
+  userExist,
+  tokenVerification,
+  protectUser,
+};
