@@ -16,6 +16,7 @@ const {
   userExist,
   tokenVerification,
   protectUser,
+  orderUserExist,
 } = require('../middlewares/user.middleware');
 
 //Import middlewares validatios for create user
@@ -36,6 +37,6 @@ router
   .patch(userExist, protectUser, updateUser)
   .delete(userExist, protectUser, deleteUser);
 router.get('/orders', getAllOrders);
-router.get('/orders/:id', getOrderById);
+router.get('/orders/:id', orderUserExist, getOrderById);
 
 module.exports = { userRouter: router };

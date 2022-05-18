@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 const { User } = require('../models/user.model');
 const { Order } = require('../models/order.model');
 const { Meal } = require('../models/meal.model');
-const { Restaurant } = require('../models/retaurant.model');
+const { Restaurant } = require('../models/restaurant.model');
 
 //Utils
 const { catchAsync } = require('../utils/catchAsync');
@@ -85,8 +85,8 @@ const getOrderById = catchAsync(async (req, res, next) => {
       id,
       userId: sessionUser.id,
       status: 'active',
-      include: [{ model: Meal, include: [{ model: Restaurant }] }],
     },
+    include: [{ model: Meal, include: [{ model: Restaurant }] }],
   });
   console.log(order);
 

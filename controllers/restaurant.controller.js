@@ -1,5 +1,5 @@
 // Models
-const { Restaurant } = require('../models/retaurant.model');
+const { Restaurant } = require('../models/restaurant.model');
 const { Review } = require('../models/review.model');
 
 //Utils
@@ -57,15 +57,14 @@ const deleteRestaurant = catchAsync(async (req, res, next) => {
 
 const createReview = catchAsync(async (req, res, next) => {
   const { comment, rating } = req.body;
-  const { sessionUser } = req;
+  const { sessionUser, restaurant } = req;
 
   const review = await Review.create({
     comment,
     rating,
     userId: sessionUser.id,
-    restaurantId: id,
+    restaurantId: restaurant.id,
   });
-  console.log(restaurant);
 
   res.status(200).json({ review });
 });

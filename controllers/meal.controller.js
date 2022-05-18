@@ -1,6 +1,6 @@
 //Models
 const { Meal } = require('../models/meal.model');
-const { Restaurant } = require('../models/retaurant.model');
+const { Restaurant } = require('../models/restaurant.model');
 
 //Utils
 const { catchAsync } = require('../utils/catchAsync');

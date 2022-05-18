@@ -2,9 +2,9 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
-const { verify } = require('jsonwebtoken');
 //Models
 const { User } = require('../models/user.model');
+const { Order } = require('../models/order.model');
 
 //Utils
 const { AppError } = require('../utils/AppError');
@@ -74,8 +74,21 @@ const protectUser = catchAsync(async (req, res, next) => {
   next();
 });
 
+const orderUserExist = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const order = await Order.findOne({ id });
+
+  if (!order) {
+    return next(new AppError('Order not found with given id'));
+  }
+
+  next();
+});
+
 module.exports = {
   userExist,
   tokenVerification,
   protectUser,
+  orderUserExist,
 };

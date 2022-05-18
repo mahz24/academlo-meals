@@ -3,7 +3,7 @@ const { AppError } = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 
 //Model
-const { Restaurant } = require('../models/retaurant.model');
+const { Restaurant } = require('../models/restaurant.model');
 const { Review } = require('../models/review.model');
 const { User } = require('../models/user.model');
 
@@ -48,16 +48,20 @@ const protectAdmin = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError('You are not admin', 403));
   }
+
+  next();
 });
 
 const protectRestaurant = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-
+  console.log(id);
   const restaurant = await Restaurant.findOne({ where: { id } });
 
   if (!restaurant) {
     return next(new AppError('This restaurant no exist', 403));
   }
+
+  req.restaurant = restaurant;
 
   next();
 });

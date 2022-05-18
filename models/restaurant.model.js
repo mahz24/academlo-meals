@@ -5,7 +5,7 @@ const { DataTypes } = require('sequelize');
 const { db } = require('../utils/database');
 
 //Model restaurant
-const Restaurant = db.define('retaurant', {
+const Restaurant = db.define('restaurant', {
   id: {
     primaryKey: true,
     autoIncrement: true,

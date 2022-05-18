@@ -24,6 +24,11 @@ const createReviewValidations = [
   body('address').notEmpty().withMessage('Address cannot be empty'),
 ];
 
+const addMealValidations = [
+  body('name').notEmpty().withMessage('Name cannot be empty'),
+  body('price').notEmpty().withMessage('Price cannot be empty'),
+];
+
 const checkValidatios = (req, res, next) => {
   const errors = validationResult(req);
 
@@ -42,4 +47,5 @@ module.exports = {
   checkValidatios,
   createUserValidations,
   createReviewValidations,
+  addMealValidations,
 };

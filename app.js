@@ -8,6 +8,7 @@ const { globalErrorHandler } = require('./controllers/errors.controller');
 const { userRouter } = require('./routes/user.route');
 const { restaurantRouter } = require('./routes/restaurant.route');
 const { mealRouter } = require('./routes/meals.route');
+const { orderRouter } = require('./routes/order.route');
 
 //Init express app
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/restaurants', restaurantRouter);
 app.use('/api/v1/meals', mealRouter);
+app.use('/api/v1/orders', orderRouter);
 
 //Errors driving
 app.use('*', globalErrorHandler);
